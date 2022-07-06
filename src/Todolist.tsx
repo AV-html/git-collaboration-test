@@ -8,24 +8,30 @@ export type TaskType = {
 }
 
 type PropsType = {
+    tasks: Array<TaskType>
+
     title: string
     filter: FilterType
 
-    tasks: Array<TaskType>
-
+    deleteTaskHandler: (id: number) => void
     changeFilter: (filter: FilterType) => void
 
 
 }
 
 
-export function Todolist({title, filter, tasks, changeFilter}: PropsType) {
+export function Todolist({title, tasks, filter, deleteTaskHandler, changeFilter}: PropsType) {
     // const {title, tasks} = props
 
     const tasksArray = tasks.map((t) => {
+        const onDeleteHandler = () => {
+            deleteTaskHandler(t.id)
+        };
+
         return <li key={t.id}>
             <input type="checkbox" checked={t.isDone}/>
             <span>{t.title}</span>
+            <button onClick={onDeleteHandler}>X</button>
         </li>
     })
 

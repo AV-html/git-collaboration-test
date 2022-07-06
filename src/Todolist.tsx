@@ -1,4 +1,5 @@
 import React from 'react';
+import {FilterType} from './App';
 
 export type TaskType = {
     id: number
@@ -7,12 +8,18 @@ export type TaskType = {
 }
 
 type PropsType = {
-    tasks: Array<TaskType>
     title: string
+    filter: FilterType
+
+    tasks: Array<TaskType>
+
+    changeFilter: (filter: FilterType) => void
+
+
 }
 
 
-export function Todolist({title, tasks}: PropsType) {
+export function Todolist({title, filter, tasks, changeFilter}: PropsType) {
     // const {title, tasks} = props
 
     const tasksArray = tasks.map((t) => {
@@ -21,6 +28,18 @@ export function Todolist({title, tasks}: PropsType) {
             <span>{t.title}</span>
         </li>
     })
+
+    const onAllFilterHandler = () => {
+        changeFilter('all')
+    };
+
+    const onActiveFilterHandler = () => {
+        changeFilter('active')
+    };
+
+    const onCompletedFilterHandler = () => {
+        changeFilter('completed')
+    };
 
     return (
         <div>
@@ -35,9 +54,9 @@ export function Todolist({title, tasks}: PropsType) {
                 {tasksArray}
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button style={filter === 'all' ? {background: 'lightgreen'} : {}} onClick={onAllFilterHandler}>All</button>
+                <button style={filter === 'active' ? {background: 'lightgreen'} : {}} onClick={onActiveFilterHandler}>Active</button>
+                <button style={filter === 'completed' ? {background: 'lightgreen'} : {}} onClick={onCompletedFilterHandler}>Completed</button>
             </div>
         </div>
     );

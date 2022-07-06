@@ -9,16 +9,23 @@ export type TaskType = {
 type PropsType = {
     tasks: Array<TaskType>
     title: string
+
+    deleteTaskHandler: (id: number) => void
 }
 
 
-export function Todolist({title, tasks}: PropsType) {
+export function Todolist({title, tasks, deleteTaskHandler}: PropsType) {
     // const {title, tasks} = props
 
     const tasksArray = tasks.map((t) => {
+        const onDeleteHandler = () => {
+            deleteTaskHandler(t.id)
+        };
+
         return <li key={t.id}>
             <input type="checkbox" checked={t.isDone}/>
             <span>{t.title}</span>
+            <button onClick={onDeleteHandler}>X</button>
         </li>
     })
 
